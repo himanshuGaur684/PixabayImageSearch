@@ -35,6 +35,7 @@ fun MainContent(viewModel: MainViewModel = hiltViewModel()) {
 
             OutlinedTextField(value = query.value, onValueChange = {
                 query.value = it
+                viewModel.getImageList(query.value)
 
             }, enabled = true,
                 singleLine = true,
@@ -58,6 +59,7 @@ fun MainContent(viewModel: MainViewModel = hiltViewModel()) {
 
 
             if (result.error.isNotBlank()) {
+                Log.d("TAG", "MainContent: ${result.error}")
                 Box(modifier = Modifier
                     .fillMaxSize()) {
                     Text(
@@ -70,6 +72,7 @@ fun MainContent(viewModel: MainViewModel = hiltViewModel()) {
 
             if (result.data.isNotEmpty()) {
                 LazyVerticalGrid(cells = GridCells.Fixed(2)) {
+                    Log.d("TAG", "MainContent: Your Token")
                     viewModel.list.value.data?.let {
                         items(it) {
                             MainContentItem(it)
